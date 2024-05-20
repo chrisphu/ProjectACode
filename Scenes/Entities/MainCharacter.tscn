@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://cbosyax1iqyl7"]
+
+[ext_resource type="Script" path="res://Scripts/AttachedToScenes/MainCharacter.cs" id="1_qa7cm"]
+[ext_resource type="Material" uid="uid://bcmg2y83tofuq" path="res://Resources/Materials/DefaultBlue.tres" id="2_8ijx5"]
+[ext_resource type="Material" uid="uid://dc4vtym8nfrfp" path="res://Resources/Materials/DefaultYellow.tres" id="3_byi71"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6g6u5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_23qed"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gxgfc"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.4
+
+[node name="MainCharacter" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_qa7cm")
+Speed = 600.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_6g6u5")
+surface_material_override/0 = ExtResource("2_8ijx5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_23qed")
+
+[node name="ForwardIndicator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.5)
+mesh = SubResource("CylinderMesh_gxgfc")
+surface_material_override/0 = ExtResource("3_byi71")
