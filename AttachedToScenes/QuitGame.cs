@@ -2,19 +2,18 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-namespace ProjectA
+namespace ProjectA;
+
+public partial class QuitGame : Node
 {
-    public partial class QuitGame : Node
+    /// <summary>
+    /// Quits game if escape key is pressed.
+    /// </summary>
+    public override void _Input(InputEvent @event)
     {
-        /// <summary>
-        /// Quits game if escape key is pressed.
-        /// </summary>
-        public override void _Input(InputEvent @event)
+        if (@event is InputEventKey { Keycode: Key.Escape })
         {
-            if (@event is InputEventKey { Keycode: Key.Escape })
-            {
-                GetTree().Quit();
-            }
+            GetTree().Quit();
         }
     }
 }
