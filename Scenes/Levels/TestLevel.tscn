@@ -9,10 +9,11 @@
 
 [node name="MainCharacter" parent="." instance=ExtResource("1_5j1rp")]
 
-[node name="MainCamera" parent="." node_paths=PackedStringArray("ObjectToFollow") instance=ExtResource("1_b8epb")]
-transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, 0, 3, -5)
-ObjectToFollow = NodePath("../MainCharacter")
-PositionOffset = Vector3(0, 3, -5)
+[node name="MainCamera" parent="." node_paths=PackedStringArray("_trackedObject") instance=ExtResource("1_b8epb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+_trackedObject = NodePath("../MainCharacter")
+_cameraPositionOffset = Vector3(0, 4, -8)
+_lookingAtOffset = Vector3(0, 1, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
