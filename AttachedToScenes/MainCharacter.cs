@@ -6,8 +6,8 @@ namespace ProjectA;
 public partial class MainCharacter : CharacterBody3D
 {
 	[Export] private MeshInstance3D _debugIndicator;
-	[Export] private float _maxMovementSpeed = 1.0f;
-	[Export(PropertyHint.Range, "0.0f, 1.0f")] private float _movementSmoothing = 0.99f;
+	[Export] private float _maxMovementSpeed = 1000.0f;
+	[Export(PropertyHint.Range, "0.0f, 1.0f")] private float _movementSmoothing = 0.995f;
 	[Export] private float _rotationSpeed = 0.5f;
 	
 	private Vector2 _relativeMouseMovement;
@@ -61,11 +61,13 @@ public partial class MainCharacter : CharacterBody3D
 		float forwardBackwardMovement = Input.GetAxis("MoveBackward", "MoveForward");
 		float leftRightMovement = Input.GetAxis("MoveRight", "MoveLeft");
 
-		_forwardBackwardMovementSpeed = _forwardBackwardMovementSpeed.Lerp(
+		_forwardBackwardMovementSpeed = Mathf.Lerp(
+			_forwardBackwardMovementSpeed,
 			(forwardBackwardMovement == 0.0f ? 0.0f : forwardBackwardMovement * _maxMovementSpeed),
 			FloatExtensionMethods.DampFactorForLerp(_movementSmoothing, delta));
 		
-		_leftRightMovementSpeed = _leftRightMovementSpeed.Lerp(
+		_leftRightMovementSpeed = Mathf.Lerp(
+			_leftRightMovementSpeed,
 			(leftRightMovement == 0.0f ? 0.0f : leftRightMovement * _maxMovementSpeed),
 			FloatExtensionMethods.DampFactorForLerp(_movementSmoothing, delta));
 
