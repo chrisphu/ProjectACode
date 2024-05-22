@@ -18,25 +18,4 @@ public static class FloatExtensionMethods
     {  
         return (1.0f - Mathf.Pow(1.0f - smoothness, (float)delta));  
     }
-
-    /// <summary>
-    /// Provides linearly interpolated float value.
-    /// </summary>
-    /// <param name="start">Start value.</param>
-    /// <param name="to">End value.</param>
-    /// <param name="weight">Percentage of the way towards to from start, typically between 0.0f and 1.0f.</param>
-    /// <remarks>
-    /// <list>
-    ///     <item>
-    ///         <see href="https://docs.godotengine.org/en/stable/tutorials/math/interpolation.html" />
-    ///     </item>
-    ///     <item>
-    ///         Using the terms "to" and "weight" to match existing terms used by Vector3.Lerp.
-    ///     </item>
-    /// </list>
-    /// </remarks>
-    public static float Lerp(this float start, float to, float weight)
-    {
-        return start + (to - start) * weight;
-    }
 }
