@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://lfui15b0xso2"]
+
+[ext_resource type="Script" path="res://Scripts/AttachedToScenes/RelativeMouseMovementTracker.cs" id="1_t5wgp"]
+
+[node name="RelativeMouseMovementTracker" type="Node"]
+script = ExtResource("1_t5wgp")

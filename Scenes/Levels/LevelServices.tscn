@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://eoy2tcjnuib1"]
+
+[ext_resource type="PackedScene" uid="uid://lfui15b0xso2" path="res://Scenes/Utility/RelativeMouseMovementTracker.tscn" id="1_0xuk1"]
+
+[node name="LevelServices" type="Node"]
+
+[node name="RelativeMouseMovementTracker" parent="." instance=ExtResource("1_0xuk1")]
