@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv6561x4hy7ck"]
-
-[ext_resource type="Script" path="res://Scripts/AttachedToScenes/Camera.cs" id="1_vqoup"]
-
-[node name="MainCamera" type="Camera3D"]
-script = ExtResource("1_vqoup")
