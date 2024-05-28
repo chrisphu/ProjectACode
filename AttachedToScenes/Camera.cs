@@ -2,7 +2,7 @@ using Godot;
 namespace ProjectA;
 
 /// <summary>
-/// Camera travels on a halo track. The halo track follows the tracked object and the camera "slides" along the track.
+/// Camera travels on a halo track. The halo track follows the tracked object and the camera "slides" along this track.
 /// </summary>
 public partial class Camera : Camera3D
 {
