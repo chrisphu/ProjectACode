@@ -1,13 +1,10 @@
 using Godot;
-using System;
-
 namespace ProjectA;
 
 public partial class MainCharacter : CharacterBody3D
 {
     [ExportGroup("Nodes")]
     [Export] private MeshInstance3D _debugIndicator;
-    [Export] private RelativeMouseMovementTracker _relativeMouseMovementTracker;
     
     [ExportGroup("Behavior")]
     [Export] private float _maxMovementSpeed = 1000.0f;
@@ -19,25 +16,45 @@ public partial class MainCharacter : CharacterBody3D
     private float _leftRightMovementSpeed;
     
     /// <summary>
-    /// Sets mouse mode to being captured when scene starts.
+    /// Sets mouse mode to being captured and initializes relative mouse movement tracker when scene starts.
     /// </summary>
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        _relativeMouseMovementTracker.OnMouseMoved += UpdateRelativeMouseMovement;
+        FindRelativeMouseMovementTracker();
     }
-
+    
     /// <summary>
-    /// Called when any input is detected and stores relative mouse movement from event arguments.
+    /// Searches the scene for the RelativeMouseMovementTracker node and then has OnMouseMoved listen to its
+    /// OnMouseMoved signal.
     /// </summary>
-    // public override void _Input(InputEvent @event)
-    // {
-    //     if (@event is InputEventMouseMotion eventArguments)
-    //     {
-    //         _relativeMouseMovement = eventArguments.Relative;
-    //     }
-    // }
-
+    private void FindRelativeMouseMovementTracker()
+    {
+        var relativeMouseMovementTrackerGroup = GetTree().GetNodesInGroup("RelativeMouseMovementTracker");
+        
+        if (relativeMouseMovementTrackerGroup.Count == 0)
+        {
+            GD.Print("RelativeMouseMovementTracker group in scene does not contain any nodes.");
+            return;
+        }
+        
+        foreach (var node in relativeMouseMovementTrackerGroup)
+        {
+            if (node is not RelativeMouseMovementTracker relativeMouseMovementTracker)
+            {
+                continue;
+            }
+            
+            relativeMouseMovementTracker.OnMouseMoved += UpdateRelativeMouseMovement;
+            
+            // Breaking as there should only be one relative mouse movement tracker in the scene.
+            break;
+        }
+    }
+    
+    /// <summary>
+    /// Listens to relative mouse movement tracker in scene for relative mouse movement during mouse inputs.
+    /// </summary>
     private void UpdateRelativeMouseMovement(Vector2 relativeMouseMovement)
     {
         _relativeMouseMovement = relativeMouseMovement;
@@ -81,7 +98,7 @@ public partial class MainCharacter : CharacterBody3D
             (leftRightMovement == 0.0f ? 0.0f : leftRightMovement * _maxMovementSpeed),
             FloatExtensionMethods.DampFactorForLerp(_movementSmoothing, delta));
         
-        var combinedMovement = Transform.Basis.Z * _forwardBackwardMovementSpeed
+        var combinedMovement = Transform.Basis.Z * _forwardBackwardMovementSpeed 
                                + Transform.Basis.X * _leftRightMovementSpeed;
         
         // Needs to be normalized to avoid diagonal movement being faster than single-axis movement.
@@ -101,12 +118,11 @@ public partial class MainCharacter : CharacterBody3D
     {
         var debugMaterial = _debugIndicator.GetActiveMaterial(0);
         
-        if (debugMaterial == null)
+        if (debugMaterial?.Duplicate() is not StandardMaterial3D newDebugMaterial)
         {
             return;
         }
         
-        var newDebugMaterial = debugMaterial.Duplicate() as StandardMaterial3D; 
         newDebugMaterial.AlbedoColor = color; 
         _debugIndicator.SetSurfaceOverrideMaterial(0, newDebugMaterial);
     }

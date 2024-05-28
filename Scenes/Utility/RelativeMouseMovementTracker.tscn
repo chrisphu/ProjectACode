@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://Scripts/AttachedToScenes/RelativeMouseMovementTracker.cs" id="1_t5wgp"]
 
-[node name="RelativeMouseMovementTracker" type="Node"]
+[node name="RelativeMouseMovementTracker" type="Node" groups=["RelativeMouseMovementTracker"]]
 script = ExtResource("1_t5wgp")

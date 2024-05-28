@@ -1,13 +1,10 @@
 using Godot;
-using System;
-using System.Diagnostics;
-
 namespace ProjectA;
 
 public partial class QuitGame : Node
 {
     /// <summary>
-    /// Quits game if escape key is pressed.
+    /// Quits game if the escape key is pressed.
     /// </summary>
     public override void _Input(InputEvent @event)
     {

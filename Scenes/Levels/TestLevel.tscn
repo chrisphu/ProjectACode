@@ -10,8 +10,7 @@
 
 [node name="LevelServices" parent="." instance=ExtResource("1_hxvia")]
 
-[node name="MainCharacter" parent="." node_paths=PackedStringArray("_relativeMouseMovementTracker") instance=ExtResource("1_5j1rp")]
-_relativeMouseMovementTracker = NodePath("../LevelServices/RelativeMouseMovementTracker")
+[node name="MainCharacter" parent="." instance=ExtResource("1_5j1rp")]
 
 [node name="MainCamera" parent="." node_paths=PackedStringArray("_trackedObject") instance=ExtResource("1_b8epb")]
 _trackedObject = NodePath("../MainCharacter")
