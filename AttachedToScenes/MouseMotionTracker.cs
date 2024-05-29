@@ -1,9 +1,9 @@
 using Godot;
 namespace ProjectA;
 
-public partial class RelativeMouseMovementTracker : Node
+public partial class MouseMotionTracker : Node
 {
-    [Signal] public delegate void OnMouseMovedEventHandler(Vector2 relativeMouseMovement);
+    [Signal] public delegate void OnMouseMotionEventHandler(Vector2 relativeMouseMovement);
     
     /// <summary>
     /// Emits relative mouse movement during mouse inputs.
@@ -12,7 +12,7 @@ public partial class RelativeMouseMovementTracker : Node
     {
         if (@event is InputEventMouseMotion eventArguments)
         {
-            EmitSignal(SignalName.OnMouseMoved, eventArguments.Relative);
+            EmitSignal(SignalName.OnMouseMotion, eventArguments.Relative);
         }
     }
 }

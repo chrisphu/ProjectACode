@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 namespace ProjectA;
 
@@ -11,7 +12,7 @@ public partial class MainCharacter : CharacterBody3D
     [Export(PropertyHint.Range, "0.0f, 1.0f")] private float _movementSmoothing = 0.995f;
     [Export] private float _rotationSpeed = 0.5f;
     
-    private Vector2 _relativeMouseMovement;
+    private Vector2 _relativeMouseMotion;
     private float _forwardBackwardMovementSpeed;
     private float _leftRightMovementSpeed;
     
@@ -21,43 +22,32 @@ public partial class MainCharacter : CharacterBody3D
     public override void _Ready()
     {
         Input.MouseMode = Input.MouseModeEnum.Captured;
-        FindRelativeMouseMovementTracker();
+        FindMouseMotionTracker();
     }
     
     /// <summary>
-    /// Searches the scene for the RelativeMouseMovementTracker node and then has OnMouseMoved listen to its
+    /// Searches the scene for the MouseMotionTracker node and then has OnMouseMoved listen to its
     /// OnMouseMoved signal.
     /// </summary>
-    private void FindRelativeMouseMovementTracker()
+    private void FindMouseMotionTracker()
     {
-        var relativeMouseMovementTrackerGroup = GetTree().GetNodesInGroup("RelativeMouseMovementTracker");
+        var mouseMotionTrackerGroup = GetTree().GetNodesInGroup("MouseMotionTracker");
+        var mouseMotionTracker = mouseMotionTrackerGroup.OfType<MouseMotionTracker>().FirstOrDefault();
         
-        if (relativeMouseMovementTrackerGroup.Count == 0)
+        if (mouseMotionTracker is null)
         {
-            GD.Print("RelativeMouseMovementTracker group in scene does not contain any nodes.");
             return;
         }
         
-        foreach (var node in relativeMouseMovementTrackerGroup)
-        {
-            if (node is not RelativeMouseMovementTracker relativeMouseMovementTracker)
-            {
-                continue;
-            }
-            
-            relativeMouseMovementTracker.OnMouseMoved += UpdateRelativeMouseMovement;
-            
-            // Breaking as there should only be one relative mouse movement tracker in the scene.
-            break;
-        }
+        mouseMotionTracker.OnMouseMotion += UpdateRelativeMouseMotion;
     }
     
     /// <summary>
     /// Listens to relative mouse movement tracker in scene for relative mouse movement during mouse inputs.
     /// </summary>
-    private void UpdateRelativeMouseMovement(Vector2 relativeMouseMovement)
+    private void UpdateRelativeMouseMotion(Vector2 relativeMouseMovement)
     {
-        _relativeMouseMovement = relativeMouseMovement;
+        _relativeMouseMotion = relativeMouseMovement;
     }
     
     /// <summary>
@@ -74,10 +64,10 @@ public partial class MainCharacter : CharacterBody3D
     /// </summary>
     private void RotateMainCharacter(double delta)
     {
-        Rotate(Transform.Basis.Y, -_relativeMouseMovement.X * _rotationSpeed * (float)delta);
+        Rotate(Transform.Basis.Y, -_relativeMouseMotion.X * _rotationSpeed * (float)delta);
         
         // Needs to be reset as _Input otherwise will never set it to (0.0f, 0.0f).
-        _relativeMouseMovement = new Vector2();
+        _relativeMouseMotion = new Vector2();
     }
     
     /// <summary>
